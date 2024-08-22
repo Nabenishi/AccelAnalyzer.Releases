@@ -7,6 +7,27 @@ Release repository for AccelAnalyzer: a toolkit for analyzing accelerometer data
 * Runs FFT signal processing to get frequency response
 * Applies Decibel Conversion
 * Exports REW compatible measurement data for EQ generation
+
+## How to use
+1. You will need an accelerometer/microcontroller. The supported boards below are integrated Plug&Play solutions for cheap, no soldering or coding required.
+2. Copy the .uf2 firmware onto the board (Plug in while holding the button)
+3. Download the AccelAnalyzer.zip
+4. Find out what COM port your sensor is connected to and put it into the settings.json
+5. Run the .exe and open the url for accessing the SwaggerUI
+6. Have your sensor hard mounted/fixed on your chair/rig
+7. Start your Pink noise on your shaker (REW Generator)
+8. Select the Measurement/AnalyzeNoise option in the UI, (Click Try) give your measurement a name, (Click Execute) and wait for results.
+9. Check the Results folder, there will be a plot of frequency response and a .txt frequency response
+10. In REW: File -> Import -> Import frequency response -> Open the .txt
+11. Then you can create your EQ in REW and load it into APO, or DSP
+12. Repeat measurement and check results, apply corrections
+
+## Configuration
+RawToGScaleFactor
+ Board/Range | ±2 g |±4 g|±8 g|±16 g|
+-|-|-|-|-|
+ADXL345 | 0.00390625| 0.00390625| 0.00390625| 0.00390625|
+LIS2DW12| 0.000244|0.000488|0.000976|  0.001952|
   
 ## Supported Sensor Boards
 Any USB Serial compatible device should work, sketches will be included for the following boards used for testing:
