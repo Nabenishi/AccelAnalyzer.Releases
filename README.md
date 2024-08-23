@@ -39,6 +39,15 @@ Board | Microprocessor | Sensor |
 BIGTREETECH ADXL345 V2.0 [(GIT)](https://github.com/bigtreetech/ADXL345) | RP2040| Analog Devices ADXL345 [(PDF)](https://www.analog.com/media/en/technical-documentation/data-sheets/adxl345.pdf)       
 BIGTREETECH S2DW V1.0/1.0.1 [(GIT)](https://github.com/bigtreetech/LIS2DW)| RP2040| STMicroelectronics LIS2DW12 [(PDF)](https://eu.mouser.com/datasheet/2/389/lis2dw12-1849760.pdf) [(Site)](https://www.st.com/en/mems-and-sensors/lis2dw12.html) | 
 
+### Message Structure
+| **Field**        | **Size** | **Description**                               |
+|------------------|----------|-----------------------------------------------|
+| **Start Marker** | 1 byte   | Fixed value `0xFF` indicating the start of the message. |
+| **X-Axis Data**  | 2 bytes  | 16-bit signed integer for the X-axis sensor value. |
+| **Y-Axis Data**  | 2 bytes  | 16-bit signed integer for the Y-axis sensor value. |
+| **Z-Axis Data**  | 2 bytes  | 16-bit signed integer for the Z-axis sensor value. |
+
+
 ## Privacy Policy
 The Application is a straightforward console app that runs locally on your device.
 The Application does not connect to the internet, does not send or receive data to or from any external servers, and does not interact with any third-party services.
