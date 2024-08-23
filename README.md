@@ -39,6 +39,11 @@ Board | Microprocessor | Sensor |
 BIGTREETECH ADXL345 V2.0 [(GIT)](https://github.com/bigtreetech/ADXL345) | RP2040| Analog Devices ADXL345 [(PDF)](https://www.analog.com/media/en/technical-documentation/data-sheets/adxl345.pdf)       
 BIGTREETECH S2DW V1.0/1.0.1 [(GIT)](https://github.com/bigtreetech/LIS2DW)| RP2040| STMicroelectronics LIS2DW12 [(PDF)](https://eu.mouser.com/datasheet/2/389/lis2dw12-1849760.pdf) [(Site)](https://www.st.com/en/mems-and-sensors/lis2dw12.html) | 
 
+## Privacy Policy
+The Application is a straightforward console app that runs locally on your device.
+The Application does not connect to the internet, does not send or receive data to or from any external servers, and does not interact with any third-party services.
+All processing occurs in isolation on your device, ensuring that your data remains private and secure.
+
 ## Libraries used:
 * https://github.com/swharden/FftSharp
 * https://github.com/ScottPlot/ScottPlot
