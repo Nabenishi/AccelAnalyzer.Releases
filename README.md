@@ -14,9 +14,10 @@ Release repository for AccelAnalyzer: a toolkit for analyzing accelerometer data
 3. Download the AccelAnalyzer.zip
 4. Find out what COM port your sensor is connected to and put it into the settings.json
 5. Run the .exe and open the url for accessing the SwaggerUI
-6. Have your sensor hard mounted/fixed on your chair/rig
-7. Start your Pink noise on your shaker (REW Generator)
-8. Select the Measurement/AnalyzeNoise option in the UI, (Click Try) give your measurement a name, (Click Execute) and wait for results.
+   - Note: You may need to install [.NET](https://dotnet.microsoft.com/en-us/download) and [ASP.NET Core 8.0 Runtime](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-aspnetcore-8.0.8-windows-hosting-bundle-installer) if You do not have it already.
+7. Have your sensor hard mounted/fixed on your chair/rig
+8. Start your Pink noise on your shaker (REW Generator)
+9. Select the Measurement/AnalyzeNoise option in the UI, (Click Try) give your measurement a name, (Click Execute) and wait for results.
    - Note: You may need to install [Windows Terminal](https://apps.microsoft.com/detail/9n0dx20hk701?hl=en-gb&gl=US) for the AsciiChart to work, and also set Consolas as your font to have the curvy curners.
 10. Check the Results folder, there will be a plot of frequency response and a .txt frequency response
 11. In REW: File -> Import -> Import frequency response -> Open the .txt
