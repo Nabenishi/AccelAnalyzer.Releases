@@ -17,10 +17,11 @@ Release repository for AccelAnalyzer: a toolkit for analyzing accelerometer data
 6. Have your sensor hard mounted/fixed on your chair/rig
 7. Start your Pink noise on your shaker (REW Generator)
 8. Select the Measurement/AnalyzeNoise option in the UI, (Click Try) give your measurement a name, (Click Execute) and wait for results.
-9. Check the Results folder, there will be a plot of frequency response and a .txt frequency response
-10. In REW: File -> Import -> Import frequency response -> Open the .txt
-11. Then you can create your EQ in REW and load it into APO, or DSP
-12. Repeat measurement and check results, apply corrections
+   - Note: You may need to install [Windows Terminal](https://apps.microsoft.com/detail/9n0dx20hk701?hl=en-gb&gl=US) for the AsciiChart to work, and also set Consolas as your font to have the curvy curners.
+10. Check the Results folder, there will be a plot of frequency response and a .txt frequency response
+11. In REW: File -> Import -> Import frequency response -> Open the .txt
+12. Then you can create your EQ in REW and load it into APO, or DSP
+13. Repeat measurement and check results, apply corrections
 
 ## Configuration
 RawToGScaleFactor
