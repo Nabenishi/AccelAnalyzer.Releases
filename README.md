@@ -57,3 +57,4 @@ All processing occurs in isolation on your device, ensuring that your data remai
 * https://github.com/swharden/FftSharp
 * https://github.com/ScottPlot/ScottPlot
 * https://github.com/adafruit/Adafruit_ADXL345
+* https://github.com/NathanBaulch/asciichart-sharp
