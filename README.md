@@ -50,12 +50,7 @@ I highly recommend the **BIGTREETECH S2DW V1.0.1** for use with AccelAnalyzer.
 12. **Verify and Fine-Tune**: Repeat measurements, analyze results, and apply necessary adjustments for optimized performance.
 
 ## Configuration
-You can configure different scaling factors for converting raw data to G-force values:
-| **Board/Range** | ±2 g | ±4 g(Default) | ±8 g | ±16 g |
-|-----------------|------|------|------|-------|
-| **LIS2DW12**    | 0.000244 | 0.000488 | 0.000976 | 0.001952 |
-| **ADXL345**     | 0.00390625 | 0.00390625 | 0.00390625 | 0.00390625 |
-
+Check the [Configuration Guide](CONFIG_GUIDE.md)
 
 ## Custom Sensor Support
 AccelAnalyzer supports any USB Serial compatible device that sends data in the following format. (See [Firmwares](https://github.com/Nabenishi/AccelAnalyzer.Releases/tree/main/Firmwares) for sample codes)
