@@ -1,60 +1,77 @@
-# AccelAnalyzer.Releases
-Release repository for AccelAnalyzer: a toolkit for analyzing accelerometer data and calibrating Bass Shakers.
 
-## What it does:
-* Reads Raw Data from sensor through USB serial and converts it to G
-* Calculates Magnitude, applies configured offset, filters and downsamples signal.
-* Runs FFT signal processing to get frequency response
-* Applies Decibel Conversion
-* Exports REW compatible measurement data for EQ generation
 
-## How to use
-1. You will need an accelerometer/microcontroller. The supported boards below are integrated Plug&Play solutions for cheap, no soldering or coding required.
-2. Copy the .uf2 firmware onto the board (Plug in while holding the button)
-3. Download the AccelAnalyzer.zip
-4. Find out what COM port your sensor is connected to and put it into the settings.json
-5. Run the .exe and open the url for accessing the SwaggerUI
-   - Note: You may need to install [.NET](https://dotnet.microsoft.com/en-us/download) and [ASP.NET Core 8.0 Runtime](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-aspnetcore-8.0.8-windows-hosting-bundle-installer) if You do not have it already.
-7. Have your sensor hard mounted/fixed on your chair/rig
-8. Start your Pink noise on your shaker (REW Generator)
-9. Select the Measurement/AnalyzeNoise option in the UI, (Click Try) give your measurement a name, (Click Execute) and wait for results.
-   - Note: You may need to install [Windows Terminal](https://apps.microsoft.com/detail/9n0dx20hk701?hl=en-gb&gl=US) for the AsciiChart to work, and also set Consolas as your font to have the curvy curners.
-10. Check the Results folder, there will be a plot of frequency response and a .txt frequency response
-11. In REW: File -> Import -> Import frequency response -> Open the .txt
-12. Then you can create your EQ in REW and load it into APO, or DSP
-13. Repeat measurement and check results, apply corrections
+# AccelAnalyzer
+**AccelAnalyzer** is a toolkit for analyzing accelerometer data and calibrating Bass Shakers.
+
+## What the app does:
+- **Raw Data Acquisition**: Reads raw accelerometer data over USB serial and converts it to G-forces.
+- **Signal Processing**: Applies filtering, offset correction, and optional calibration on the captured data.
+- **Frequency Response Analysis**: Runs FFT (Fast Fourier Transform) for frequency domain analysis.
+- **Decibel Conversion**: Converts frequency magnitude to dB scale.
+- **Generates Graphs**: 
+  - G/Time RAW
+  - G/Time Selected Axes with DC Blocker & Filtering
+  - Magnitude (G) vs Frequency
+  - Magnitude (dB) vs Frequency
+  - Power Spectral Density
+- **REW Compatibility**: Exports measurement data compatible with REW ([Room EQ Wizard](https://www.roomeqwizard.com/)) for EQ generation and calibration.
+
+## Recommended Hardware:
+I highly recommend the **BIGTREETECH S2DW V1.0.1** for use with AccelAnalyzer.
+ -   **Pre-assembled**: No soldering required, easy  **USB Plug & Play** solution.
+ -   **Sensor**: Features the STMicroelectronics [LIS2DW12](https://www.st.com/en/mems-and-sensors/lis2dw12.html), with  high accuracy and low noise.
+ - **Mounting**: Has a nice M6 hole in the middle.
+ - **Cheap**: Usually around 5-10 USD/EUR
+ 
+### Official Stores:    [BIQU](https://biqu.equipment/products/adxl-345-accelerometer-board-for-36-stepper-motors?variant=40446852759650), [Amazon](https://www.amazon.com/BIGTREETECH-S2DW-Acceleration-Raspberry-Pi-Accelerometer/dp/B0CHFMBFCJ?ref_=ast_sto_dp), [Aliexpress](https://www.aliexpress.com/item/1005004243190853.html?spm=a2g0o.store_pc_home.promoteWysiwyg_4000000448804.1005004243190853)
+
+
+
+
+## How to Use:
+1. **Get the Sensor**: Buy the recommended board or build your own.
+2. **Install Firmware**: Copy the `.uf2` firmware to your board (Plug it in while holding the button to enter bootloader mode).
+	- Note: If you are not using the recommended sensor, you have to code your own firmware.
+3. **Mount Sensor**: Securely hard mount your sensor to a fixed point, such as your chair, seat or rig and make sure it doesn't wobble.
+4. **Get the App**: Obtain the latest **AccelAnalyzer.zip** from the [releases](https://github.com/Nabenishi/AccelAnalyzer.Releases/releases).
+5. **Setup**: Identify the COM port your sensor is connected to (Device Manager) and update the `settings.json` file accordingly.
+6. **Run the Application**: 
+   - Execute the `.exe` and open the provided URL to access the SwaggerUI.
+   - Note: You may need to install [**.NET**](https://dotnet.microsoft.com/en-us/download) and [**ASP.NET Core 8.0 Runtime**](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-aspnetcore-8.0.8-windows-hosting-bundle-installer) if not already installed.
+7. **Start Test Signal**: Use **REW**'s Generator to play **Pink Noise** through your shaker.
+8. **Measure**:
+   - Navigate to the UI and select **Measurement/AnalyzeToneNoise**.
+   - Click **Try it out**, Enter a name for the measurement, click **Execute**, and wait for results.
+   - Note: For the ASCII chart to render correctly, you may need to install [**Windows Terminal**](https://apps.microsoft.com/detail/9n0dx20hk701?hl=en-gb&gl=US) and set **Consolas** as your font to get smooth characters.
+9. **Review Results**:
+   - Check the `Results` folder for plots and `.txt` files of the frequency response.
+10. **REW Import**: Open REW, go to **File -> Import -> Frequency Response**, and load the generated `.txt` file.
+11. **Create Your EQ**: Use REW to generate the EQ curve and load it into **[Equalizer APO](https://sourceforge.net/projects/equalizerapo/)** or your DSP.
+12. **Verify and Fine-Tune**: Repeat measurements, analyze results, and apply necessary adjustments for optimized performance.
 
 ## Configuration
-RawToGScaleFactor
- Board/Range | ±2 g |±4 g|±8 g|±16 g|
--|-|-|-|-|
-ADXL345 | 0.00390625| 0.00390625| 0.00390625| 0.00390625|
-LIS2DW12| 0.000244|0.000488|0.000976|  0.001952|
-  
-## Supported Sensor Boards
-Any USB Serial compatible device should work, sketches will be included for the following boards used for testing:
+You can configure different scaling factors for converting raw data to G-force values:
+| **Board/Range** | ±2 g | ±4 g(Default) | ±8 g | ±16 g |
+|-----------------|------|------|------|-------|
+| **LIS2DW12**    | 0.000244 | 0.000488 | 0.000976 | 0.001952 |
+| **ADXL345**     | 0.00390625 | 0.00390625 | 0.00390625 | 0.00390625 |
 
-Board | Microprocessor | Sensor |
------------------|----------------|---|
-BIGTREETECH ADXL345 V2.0 [(GIT)](https://github.com/bigtreetech/ADXL345) | RP2040| Analog Devices ADXL345 [(PDF)](https://www.analog.com/media/en/technical-documentation/data-sheets/adxl345.pdf)       
-BIGTREETECH S2DW V1.0/1.0.1 [(GIT)](https://github.com/bigtreetech/LIS2DW)| RP2040| STMicroelectronics LIS2DW12 [(PDF)](https://eu.mouser.com/datasheet/2/389/lis2dw12-1849760.pdf) [(Site)](https://www.st.com/en/mems-and-sensors/lis2dw12.html) | 
 
-### Message Structure
+## Custom Sensor Support
+AccelAnalyzer supports any USB Serial compatible device that sends data in the following format. (See [Firmwares](https://github.com/Nabenishi/AccelAnalyzer.Releases/tree/main/Firmwares) for sample codes)
+
 | **Field**        | **Size** | **Description**                               |
 |------------------|----------|-----------------------------------------------|
 | **Start Marker** | 1 byte   | Fixed value `0xFF` indicating the start of the message. |
-| **X-Axis Data**  | 2 bytes  | 16-bit signed integer for the X-axis sensor value. |
-| **Y-Axis Data**  | 2 bytes  | 16-bit signed integer for the Y-axis sensor value. |
-| **Z-Axis Data**  | 2 bytes  | 16-bit signed integer for the Z-axis sensor value. |
-
+| **X-Axis Data**  | 2 bytes  | 16-bit signed integer for X-axis sensor value. |
+| **Y-Axis Data**  | 2 bytes  | 16-bit signed integer for Y-axis sensor value. |
+| **Z-Axis Data**  | 2 bytes  | 16-bit signed integer for Z-axis sensor value. |
 
 ## Privacy Policy
-The Application is a straightforward console app that runs locally on your device.
-The Application does not connect to the internet, does not send or receive data to or from any external servers, and does not interact with any third-party services.
-All processing occurs in isolation on your device, ensuring that your data remains private and secure.
+AccelAnalyzer runs locally on your device and does not connect to the internet. It does not send or receive data from any external servers. All data processing happens in isolation on your device, ensuring complete data privacy and security.
 
-## Libraries used:
-* https://github.com/swharden/FftSharp
-* https://github.com/ScottPlot/ScottPlot
-* https://github.com/adafruit/Adafruit_ADXL345
-* https://github.com/NathanBaulch/asciichart-sharp
+## Libraries Used:
+- [**FftSharp**](https://github.com/swharden/FftSharp) - For FFT analysis.
+- [**ScottPlot**](https://github.com/ScottPlot/ScottPlot) - For plotting graphs.
+- [**Adafruit_ADXL345**](https://github.com/adafruit/Adafruit_ADXL345) - ADXL345 accelerometer library.
+- [**asciichart-sharp**](https://github.com/NathanBaulch/asciichart-sharp) - ASCII chart rendering library.
