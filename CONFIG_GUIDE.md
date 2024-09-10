@@ -29,6 +29,10 @@ This factor converts the raw sensor values into G-forces based on the sensor's r
     
     **Example**: Use different values like `0.000244` for ±2g or `0.000976` for ±8g.
     
+| **Board/Range** | ±2 g | ±4 g(Default) | ±8 g | ±16 g |
+|-----------------|------|------|------|-------|
+| **LIS2DW12**    | 0.000244 | 0.000488 | 0.000976 | 0.001952 |
+| **ADXL345**     | 0.00390625 | 0.00390625 | 0.00390625 | 0.00390625 |
 
 ####  **UseTestSignal**
 
