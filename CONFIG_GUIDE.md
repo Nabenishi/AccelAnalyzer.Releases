@@ -63,11 +63,11 @@ Number of samples to collect before processing.
 
 ----------
 
-### 3. **ChartConfig**
+###  **ChartConfig**
 
 Settings related to the time-based chart display.
 
-#### 3.1 **DisplayTimeSeconds**
+####  **DisplayTimeSeconds**
 
 The time window, in seconds, displayed in the real-time chart.
 
@@ -76,7 +76,7 @@ The time window, in seconds, displayed in the real-time chart.
     **Example**: Increase for a wider time view, such as `2` or `3` seconds.
     
 
-#### 3.2 **RefreshRateSeconds**
+####  **RefreshRateSeconds**
 
 Time interval for refreshing the chart display.
 
@@ -87,17 +87,17 @@ Time interval for refreshing the chart display.
 
 ----------
 
-### 4. **PlotConfig**
+###  **PlotConfig**
 
 Defines the configuration for the plot output, such as the graph dimensions.
 
-#### 4.1 **PlotScaleFactor**
+####  **PlotScaleFactor**
 
 Adjusts the scale of the plots.
 
 -   **Default**: `1.8`
 
-#### 4.2 **PlotWidth** and **PlotHeight**
+####  **PlotWidth** and **PlotHeight**
 
 Dimensions of the generated plot in pixels.
 
@@ -106,17 +106,17 @@ Dimensions of the generated plot in pixels.
 
 ----------
 
-### 5. **SensorOrientation**
+###  **SensorOrientation**
 
 This section allows you to configure the orientation of the sensor and apply roll/pitch offsets.
 
-#### 5.1 **XAxis, YAxis, ZAxis**
+####  **XAxis, YAxis, ZAxis**
 
 Assigns the correct axis labels according to your sensor’s orientation.
 
 -   **Default**: `"X"`, `"Y"`, `"Z"`
 
-#### 5.2 **InvertRoll** and **InvertPitch**
+####  **InvertRoll** and **InvertPitch**
 
 Allows you to invert the roll and pitch axis if your sensor is mounted in reverse.
 
@@ -125,7 +125,7 @@ Allows you to invert the roll and pitch axis if your sensor is mounted in revers
     **Possible values**: `true` (invert axis), `false` (normal orientation).
     
 
-#### 5.3 **RollOffset** and **PitchOffset**
+####  **RollOffset** and **PitchOffset**
 
 Offsets applied to correct for any tilt or misalignment in the sensor.
 
@@ -136,7 +136,7 @@ Offsets applied to correct for any tilt or misalignment in the sensor.
 
 ----------
 
-### 6. **AxisSelection**
+###  **AxisSelection**
 
 Selects which axes (X, Y, Z) are included in the analysis.
 
@@ -148,11 +148,11 @@ Set to `false` if you want to exclude a specific axis.
 
 ----------
 
-### 7. **Calibration**
+###  **Calibration**
 
 The calibration section allows you to manually offset and scale the sensor data.
 
-#### 7.1 **Enabled**
+####  **Enabled**
 
 Determines if calibration is applied to the sensor data.
 
@@ -161,7 +161,7 @@ Determines if calibration is applied to the sensor data.
     **Possible values**: `true` (apply calibration), `false` (no calibration).
     
 
-#### 7.2 **Offset**
+####  **Offset**
 
 Defines the manual offset applied to each axis.
 
@@ -171,7 +171,7 @@ Defines the manual offset applied to each axis.
 
 Adjust to correct for any sensor drift or bias.
 
-#### 7.3 **ScaleFactor**
+####  **ScaleFactor**
 
 Applies a scale factor to each axis, allowing calibration for sensitivity.
 
