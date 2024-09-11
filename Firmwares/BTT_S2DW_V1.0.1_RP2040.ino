@@ -46,7 +46,10 @@ void setup(void) {
   //softwareWriteRegister(0x20, 0x84);  // ODR 800 Hz, High-Performance mode
   //softwareWriteRegister(0x20, 0x94);  // ODR 1600 Hz, High-Performance mode
 
+  //softwareWriteRegister(0x25, 0x04);  // 2g low noise
   softwareWriteRegister(0x25, 0x14);  // 4g low noise
+  //softwareWriteRegister(0x25, 0x24);  // 8g low noise
+  //softwareWriteRegister(0x25, 0x34);  // 16g low noise
   softwareWriteRegister(0x23, 0x01);  // Data-Ready routed to INT1
   softwareWriteRegister(0x3F, 0xA0);  // Enable interrupts in pulsed mode.
 
