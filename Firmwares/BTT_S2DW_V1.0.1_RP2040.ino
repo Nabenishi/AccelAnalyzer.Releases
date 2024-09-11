@@ -7,6 +7,7 @@ const uint8_t mosi = 11;    // GPIO11
 const uint8_t cs = 9;       // GPIO9
 const uint8_t INT1 = 6;     // GPIO6
 
+absolute_time_t previousTime;  // Using absolute_time_t for timestamp tracking
 
 void setup(void) {
   Serial.begin(115200);
@@ -53,19 +54,25 @@ void setup(void) {
   delay(100);
 
   attachInterrupt(digitalPinToInterrupt(INT1), dataReadyISR, RISING);
+  previousTime = get_absolute_time();
 }
 
 
 // Pre-allocated buffer
-uint8_t buffer[7];
+uint8_t buffer[9];
 const uint8_t startMarker = 0xFF;
 volatile bool dataReady = false;
+uint16_t interval = 0;         // 16-bit unsigned interval
+absolute_time_t currentTime;
 
 void loop(void) {
   if (dataReady) {
     dataReady = false;
 
-    // Check if the DRDY (Data Ready) bit is set, which is bit 7
+    // Calculate the interval in microseconds between the current and previous time
+    interval = (uint16_t)(absolute_time_diff_us(previousTime, currentTime));
+    previousTime = currentTime;  // Update the previous time
+    
     // Read sensor values
     int16_t x = (read16BitRegister(0x28) >> 2);
     int16_t y = (read16BitRegister(0x2A) >> 2);
@@ -76,6 +83,7 @@ void loop(void) {
     memcpy(buffer + 1, &x, sizeof(int16_t));
     memcpy(buffer + 3, &y, sizeof(int16_t));
     memcpy(buffer + 5, &z, sizeof(int16_t));
+    memcpy(buffer + 7, &interval, sizeof(uint16_t));
 
     // Send in one call
     Serial.write(buffer, sizeof(buffer));
@@ -84,6 +92,7 @@ void loop(void) {
 
 // Interrupt Service Routine (ISR) for Data Ready interrupt
 void dataReadyISR() {
+  currentTime = get_absolute_time();
   dataReady = true;
 }
 

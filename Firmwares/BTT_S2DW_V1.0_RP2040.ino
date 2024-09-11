@@ -6,6 +6,8 @@ const uint8_t miso = 8;     // GPIO8
 const uint8_t mosi = 11;    // GPIO11
 const uint8_t cs = 9;       // GPIO9
 
+absolute_time_t previousTime;  // Using absolute_time_t for timestamp tracking
+
 void setup(void) {
   Serial.begin(115200);
   delay(1000);
@@ -46,15 +48,23 @@ void setup(void) {
 
   Serial.println("Sensor setup complete.");
   delay(100);
+  previousTime = get_absolute_time();
 }
 
 
 // Pre-allocated buffer
-uint8_t buffer[7];
+uint8_t buffer[9];
 const uint8_t startMarker = 0xFF;
+uint16_t interval = 0;         // 16-bit unsigned interval
 
 void loop(void) {
   if (softwareReadRegister(0x27) & 0x01) {
+
+    absolute_time_t currentTime = get_absolute_time();
+
+    // Calculate the interval in microseconds between the current and previous time
+    interval = (uint16_t)(absolute_time_diff_us(previousTime, currentTime));
+    previousTime = currentTime;  // Update the previous time
 
     // Check if the DRDY (Data Ready) bit is set, which is bit 7
     // Read sensor values
@@ -67,6 +77,7 @@ void loop(void) {
     memcpy(buffer + 1, &x, sizeof(int16_t));
     memcpy(buffer + 3, &y, sizeof(int16_t));
     memcpy(buffer + 5, &z, sizeof(int16_t));
+    memcpy(buffer + 7, &interval, sizeof(uint16_t));
 
     // Send in one call
     Serial.write(buffer, sizeof(buffer));
