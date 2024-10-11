@@ -35,19 +35,25 @@ I highly recommend the **BIGTREETECH S2DW V1.0.1** for use with AccelAnalyzer.
 3. **Mount Sensor**: Securely hard mount your sensor to a fixed point, such as your chair, seat or rig and make sure it doesn't wobble.
 4. **Get the App**: Obtain the latest **AccelAnalyzer.zip** from the [releases](https://github.com/Nabenishi/AccelAnalyzer.Releases/releases).
 5. **Setup**: Identify the COM port your sensor is connected to (Device Manager) and update the `settings.json` file accordingly.
-6. **Run the Application**: 
+   - Make sure to check if the port settings are correct:
+     - Bits per second: 115200
+     - Data bits: 8
+     - Parity: None
+     - Stop bits: 1
+     - Flow control: None
+7. **Run the Application**: 
    - Execute the `.exe` and open the provided URL to access the SwaggerUI.
    - Note: You may need to install [**.NET**](https://dotnet.microsoft.com/en-us/download) and [**ASP.NET Core 8.0 Runtime**](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-aspnetcore-8.0.8-windows-hosting-bundle-installer) if not already installed.
-7. **Start Test Signal**: Use **REW**'s Generator to play **Pink Noise** through your shaker.
-8. **Measure**:
+8. **Start Test Signal**: Use **REW**'s Generator to play **Pink Noise** through your shaker.
+9. **Measure**:
    - Navigate to the UI and select **Measurement/AnalyzeToneNoise**.
    - Click **Try it out**, Enter a name for the measurement, click **Execute**, and wait for results.
    - Note: For the ASCII chart to render correctly, you may need to install [**Windows Terminal**](https://apps.microsoft.com/detail/9n0dx20hk701?hl=en-gb&gl=US) and set **Consolas** as your font to get smooth characters.
-9. **Review Results**:
+10. **Review Results**:
    - Check the `Results` folder for plots and `.txt` files of the frequency response.
-10. **REW Import**: Open REW, go to **File -> Import -> Frequency Response**, and load the generated `.txt` file.
-11. **Create Your EQ**: Use REW to generate the EQ curve and load it into **[Equalizer APO](https://sourceforge.net/projects/equalizerapo/)** or your DSP.
-12. **Verify and Fine-Tune**: Repeat measurements, analyze results, and apply necessary adjustments for optimized performance.
+11. **REW Import**: Open REW, go to **File -> Import -> Frequency Response**, and load the generated `.txt` file.
+12. **Create Your EQ**: Use REW to generate the EQ curve and load it into **[Equalizer APO](https://sourceforge.net/projects/equalizerapo/)** or your DSP.
+13. **Verify and Fine-Tune**: Repeat measurements, analyze results, and apply necessary adjustments for optimized performance.
 
 ## Configuration
 Check the [Configuration Guide](CONFIG_GUIDE.md)
