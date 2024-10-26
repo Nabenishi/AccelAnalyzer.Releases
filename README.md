@@ -1,5 +1,3 @@
-
-
 # AccelAnalyzer
 **AccelAnalyzer** is a toolkit for analyzing accelerometer data and calibrating Bass Shakers.
 
@@ -14,7 +12,18 @@
   - Magnitude (G) vs Frequency
   - Magnitude (dB) vs Frequency
   - Power Spectral Density
+  - Heatmap (Spectrogram)
 - **REW Compatibility**: Exports measurement data compatible with REW ([Room EQ Wizard](https://www.roomeqwizard.com/)) for EQ generation and calibration.
+- **Sonic Visualiser Compatibility**: Exports measurement data in .CSV
+  
+### Output example of a REW Measurement Sweep on a BST-300EX (EQ-ed):
+| SampleRate | Axes in G | Offset removed |
+|--|--|--|
+| ![Sweep_R15_SR](https://github.com/user-attachments/assets/2f6bb474-847e-49e2-beda-626767aad9b0) | ![Sweep_R15_XYZ](https://github.com/user-attachments/assets/d476ba5a-775e-48bd-a142-6ad42f1d2a98) | ![Sweep_R15_SEL](https://github.com/user-attachments/assets/d40a94f0-7e9d-4e8b-af23-8ca029f4d04d) |
+
+|FFT|PSD|dB|Heatmap|
+|--|--|--|--|
+| ![Sweep_R15_FFT](https://github.com/user-attachments/assets/a655bdf1-df0c-4d96-ac14-f6b6aa32a6f9) | ![Sweep_R15_PSD](https://github.com/user-attachments/assets/5af11227-8583-4154-91f1-360ac38b935a) | ![Sweep_R15_dB](https://github.com/user-attachments/assets/da864b42-c772-46bd-8521-bf52d5fe9f57) | ![Sweep_R15_HM](https://github.com/user-attachments/assets/8bd0c687-c93b-4b20-82d8-d9a091da5af9) |
 
 ## Recommended Hardware:
 I highly recommend the **BIGTREETECH S2DW V1.0.1** for use with AccelAnalyzer.
@@ -35,12 +44,11 @@ I highly recommend the **BIGTREETECH S2DW V1.0.1** for use with AccelAnalyzer.
 3. **Mount Sensor**: Securely hard mount your sensor to a fixed point, such as your chair, seat or rig and make sure it doesn't wobble.
 4. **Get the App**: Obtain the latest **AccelAnalyzer.zip** from the [releases](https://github.com/Nabenishi/AccelAnalyzer.Releases/releases).
 5. **Setup**: Identify the COM port your sensor is connected to (Device Manager) and update the `settings.json` file accordingly.
-   - Make sure to check if the port settings are correct:
-     - Bits per second: 115200
-     - Data bits: 8
-     - Parity: None
-     - Stop bits: 1
-     - Flow control: None
+   - If you are having connection issues:
+     - If you are using SimHub, disable [**serial port scan**](https://github.com/SHWotever/SimHub/wiki/Troubleshoot-other-hardware-Serial-ports-conflicts). (Or any other app that is polling serial USB devices)
+     - Check if the port settings are correct (Bits per second: 115200, Data bits: 8, Parity: None, Stop bits: 1)
+     - Connect directly to motherboard
+     - Use a shorter cable 
 7. **Run the Application**: 
    - Execute the `.exe` and open the provided URL to access the SwaggerUI.
    - Note: You may need to install [**.NET**](https://dotnet.microsoft.com/en-us/download) and [**ASP.NET Core 8.0 Runtime**](https://dotnet.microsoft.com/en-us/download/dotnet/thank-you/runtime-aspnetcore-8.0.8-windows-hosting-bundle-installer) if not already installed.
@@ -61,12 +69,13 @@ Check the [Configuration Guide](CONFIG_GUIDE.md)
 ## Custom Sensor Support
 AccelAnalyzer supports any USB Serial compatible device that sends data in the following format. (See [Firmwares](https://github.com/Nabenishi/AccelAnalyzer.Releases/tree/main/Firmwares) for sample codes)
 
-| **Field**        | **Size** | **Description**                               |
+| **Field**        | **Type** | **Value**                               |
 |------------------|----------|-----------------------------------------------|
-| **Start Marker** | 1 byte   | Fixed value `0xFF` indicating the start of the message. |
-| **X-Axis Data**  | 2 bytes  | 16-bit signed integer for X-axis sensor value. |
-| **Y-Axis Data**  | 2 bytes  | 16-bit signed integer for Y-axis sensor value. |
-| **Z-Axis Data**  | 2 bytes  | 16-bit signed integer for Z-axis sensor value. |
+| **Start Marker** | UINT8   | Const `0xFF` indicating the start of the message. |
+| **X-Axis Data**  | INT16  | RAW X-axis acceleration. |
+| **Y-Axis Data**  | INT16  | RAW Y-axis acceleration. |
+| **Z-Axis Data**  | INT16  | RAW Z-axis acceleration. |
+| **Interval**  | UINT16  | Microseconds elapsed since previous data. |
 
 ## Privacy Policy
 AccelAnalyzer runs locally on your device and does not connect to the internet. It does not send or receive data from any external servers. All data processing happens in isolation on your device, ensuring complete data privacy and security.
