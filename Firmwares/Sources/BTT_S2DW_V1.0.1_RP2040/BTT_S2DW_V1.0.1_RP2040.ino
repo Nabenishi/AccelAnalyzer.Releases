@@ -8,7 +8,7 @@ const uint8_t SCLK_PIN = 10;  // Serial Clock pin
 const uint8_t INT1_PIN = 6;   // Interrupt pin
 
 stmdev_ctx_t dev_ctx;          // Device context for the driver
-absolute_time_t previousTime;  // Using absolute_time_t for timestamp tracking
+absolute_time_t referenceTime;  // Using absolute_time_t for timestamp tracking
 
 void spiInit() {
   // Setup SPI pins
@@ -81,25 +81,42 @@ void setup(void) {
   delay(100);
 
   attachInterrupt(digitalPinToInterrupt(INT1_PIN), dataReadyISR, RISING);
-  previousTime = get_absolute_time();
+  referenceTime = to_us_since_boot(get_absolute_time());
 }
 
-// Pre-allocated buffer
-uint8_t buffer[9];
-const uint8_t startMarker = 0xFF;
+// Pre-allocated buffers
+uint8_t dataBuffer[11];
+uint8_t syncBuffer[9];
+const uint8_t dataMarker = 0xFF;
+const uint8_t syncMarker = 0xFE;
 volatile bool dataReady = false;
 int16_t data_raw_acceleration[3];
-uint16_t interval = 0;
-absolute_time_t currentTime;
+uint32_t syncInterval = 0;
+absolute_time_t dataReadyTime;
 bool DebugMode = false;
 
 void loop(void) {
+
+  if (Serial.available() > 0) {
+    uint8_t command = Serial.read();
+    if (command == 0x01) {
+      // Respond with the absolute time framed with syncMarker
+      referenceTime = to_us_since_boot(get_absolute_time());
+
+      // Prepare sync message
+      syncBuffer[0] = syncMarker;
+      memcpy(syncBuffer + 1, &referenceTime, 8);
+
+      // Send sync message
+      Serial.write(syncBuffer, 9);  // Total 9 bytes: 1-byte marker + 8-byte timestamp
+    }
+  }
+
   if (dataReady) {
     dataReady = false;
 
     // Calculate the interval in microseconds between the current and previous time
-    interval = (uint16_t)(absolute_time_diff_us(previousTime, currentTime));
-    previousTime = currentTime;  // Update the previous time
+    syncInterval = (uint32_t)(absolute_time_diff_us(referenceTime, dataReadyTime));
 
     // Read sensor values using the driver
     lis2dw12_acceleration_raw_get(&dev_ctx, data_raw_acceleration);
@@ -118,23 +135,23 @@ void loop(void) {
       Serial.print(" Z:");
       Serial.print(z);
       Serial.print(" INT:");
-      Serial.println(interval);
+      Serial.println(syncInterval);
     } else {
       // Pack marker and data into buffer
-      buffer[0] = startMarker;
-      memcpy(buffer + 1, &x, sizeof(int16_t));
-      memcpy(buffer + 3, &y, sizeof(int16_t));
-      memcpy(buffer + 5, &z, sizeof(int16_t));
-      memcpy(buffer + 7, &interval, sizeof(uint16_t));
+      dataBuffer[0] = dataMarker;
+      memcpy(dataBuffer + 1, &x, 2);
+      memcpy(dataBuffer + 3, &y, 2);
+      memcpy(dataBuffer + 5, &z, 2);
+      memcpy(dataBuffer + 7, &syncInterval, 4);
       // Send data in one call
-      Serial.write(buffer, sizeof(buffer));
+      Serial.write(dataBuffer, sizeof(dataBuffer));// Total 11 bytes: 1-byte marker + 6 (3x2) byte xyz + 4 byte timestamp
     }
   }
 }
 
 // Interrupt Service Routine (ISR) for Data Ready interrupt
 void dataReadyISR() {
-  currentTime = get_absolute_time();
+  dataReadyTime = get_absolute_time();
   dataReady = true;
 }
 
