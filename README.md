@@ -15,6 +15,8 @@
   - Heatmap (Spectrogram)
 - **REW Compatibility**: Exports measurement data compatible with REW ([Room EQ Wizard](https://www.roomeqwizard.com/)) for EQ generation and calibration.
 - **Sonic Visualiser Compatibility**: Exports measurement data in .CSV
+- **Datalogger**: Records G-s with precise timestamp into CSV
+- **Audio Stream**: Provides accelerometer data as audio output for tools like REW 
   
 ### Output example of a REW Measurement Sweep on a BST-300EX (EQ-ed):
 | SampleRate | Axes in G | Offset removed |
@@ -24,6 +26,13 @@
 |FFT|PSD|dB|Heatmap|
 |--|--|--|--|
 | ![Sweep_R15_FFT](https://github.com/user-attachments/assets/a655bdf1-df0c-4d96-ac14-f6b6aa32a6f9) | ![Sweep_R15_PSD](https://github.com/user-attachments/assets/5af11227-8583-4154-91f1-360ac38b935a) | ![Sweep_R15_dB](https://github.com/user-attachments/assets/da864b42-c772-46bd-8521-bf52d5fe9f57) | ![Sweep_R15_HM](https://github.com/user-attachments/assets/8bd0c687-c93b-4b20-82d8-d9a091da5af9) |
+
+### Realtime audio output from acceleration data:
+|TB Equalizer|Sonic Visualizer|REW RTA|
+|--|--|--|
+| ![TB Equalizer](https://github.com/user-attachments/assets/6ecc0f7b-7d54-4fec-9e87-1f67699082db) | ![Sonic Visualizer](https://github.com/user-attachments/assets/d1061ba3-1f85-4aca-98dd-055bb0f73e0e) | ![REW RTA](https://github.com/user-attachments/assets/7c2fe67a-fafc-4959-9bf9-51948eb09ca6) |
+
+
 
 ## Recommended Hardware:
 I highly recommend the **BIGTREETECH S2DW V1.0.1** for use with AccelAnalyzer.
@@ -66,17 +75,6 @@ I highly recommend the **BIGTREETECH S2DW V1.0.1** for use with AccelAnalyzer.
 ## Configuration
 Check the [Configuration Guide](CONFIG_GUIDE.md)
 
-## Custom Sensor Support
-AccelAnalyzer supports any USB Serial compatible device that sends data in the following format. (See [Firmwares](https://github.com/Nabenishi/AccelAnalyzer.Releases/tree/main/Firmwares) for sample codes)
-
-| **Field**        | **Type** | **Value**                               |
-|------------------|----------|-----------------------------------------------|
-| **Start Marker** | UINT8   | Const `0xFF` indicating the start of the message. |
-| **X-Axis Data**  | INT16  | RAW X-axis acceleration. |
-| **Y-Axis Data**  | INT16  | RAW Y-axis acceleration. |
-| **Z-Axis Data**  | INT16  | RAW Z-axis acceleration. |
-| **Interval**  | UINT16  | Microseconds elapsed since previous data. |
-
 ## Privacy Policy
 AccelAnalyzer runs locally on your device and does not connect to the internet. It does not send or receive data from any external servers. All data processing happens in isolation on your device, ensuring complete data privacy and security.
 
@@ -85,3 +83,4 @@ AccelAnalyzer runs locally on your device and does not connect to the internet. 
 - [**ScottPlot**](https://github.com/ScottPlot/ScottPlot) - For plotting graphs.
 - [**Adafruit_ADXL345**](https://github.com/adafruit/Adafruit_ADXL345) - ADXL345 accelerometer library.
 - [**asciichart-sharp**](https://github.com/NathanBaulch/asciichart-sharp) - ASCII chart rendering library.
+- [**NAudio**](https://github.com/naudio/NAudio) - Audio and MIDI library for .NET
